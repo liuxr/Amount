@@ -49,3 +49,7 @@ F:\MyPay2.0\MyPay\obj\x86\Debug\MyPay.csproj.GenerateResource.Cache
 E:\MyPay3.0\MyPay\bin\Debug\MyPay.exe.config
 E:\MyPay3.0\MyPay\obj\x86\Debug\MyPay.exe
 E:\MyPay3.0\MyPay\obj\x86\Debug\MyPay.pdb
+F:\MyPay\MyPay\bin\Debug\Dapper.dll
+F:\MyPay\MyPay\bin\Debug\System.Data.SQLite.dll
+F:\MyPay\MyPay\bin\Debug\Dapper.xml
+F:\MyPay\MyPay\bin\Debug\System.Data.SQLite.pdb

@@ -59,6 +59,7 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderCompare.cs" />
     <Compile Include="OrderDAL.cs" />
     <Compile Include="Element.cs" />
     <Compile Include="FrmBrower.cs">

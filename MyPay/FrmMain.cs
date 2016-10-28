@@ -37,9 +37,17 @@ namespace MyPay
 
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            SetWidth(lvNear);
+            SetWidth(lvWorking, false);
+
             LoadData();
-            frmBrower.onGetContext += ((name, html, newOrders) => {
+            //更新用户名
+            frmBrower.onUpdateName += (name) => {
                 lblName.Text = name;
+            };
+
+            frmBrower.onGetContext += (( html, newOrders,canWatch) => {
+                btnWatch.Enabled = canWatch;
                 rtbHtml.Clear();
                 rtbHtml.AppendText(html);
                 AppendData(newOrders);
@@ -71,15 +79,17 @@ namespace MyPay
             foreach (Order model in list) {
                 ListViewItem item = new ListViewItem(new string[] {
                     model.ID.ToString(),
+                    model.CreateDate,
+                    model.Name,
                     model.OrderNo,
                     model.TradeNo,
-                    model.Amount,
+                    model.BatchNo,
                     model.Payee,
-                    model.CreateDate,
-                    model.UpLoadState
+                    model.Amount,
+                    model.State
                 });
 
-                lvNear.Items.Add(item);
+                lvNear.Items.Insert(0,item);
             }
         }
 
@@ -87,15 +97,18 @@ namespace MyPay
             foreach (Order model in list)
             {
                 ListViewItem item = new ListViewItem(new string[] {
+                      model.ID.ToString(),
+                    model.CreateDate,
+                    model.Name,
                     model.OrderNo,
                     model.TradeNo,
-                    model.Amount,
+                    model.BatchNo,
                     model.Payee,
-                    model.CreateDate,
-                    model.UpLoadState
+                    model.Amount,
+                    model.State
                 });
 
-                lvWorking.Items.Add(item);
+                lvWorking.Items.Insert(0,item);
             }
         }
 
@@ -109,6 +122,28 @@ namespace MyPay
             }
 
             frmBrower.SetInterval(result);
+        }
+
+
+        private void SetWidth(ListView lv,bool showId=true) {
+            int width = lv.Width;
+            int w1 = lv.Columns[0].Width = showId ? 60 : 0;
+            int w2 = lv.Columns[1].Width = 120;
+            int w6 = lv.Columns[7].Width = 80;
+            int w7 = lv.Columns[8].Width = 80;
+            int w = width - (w1+ w2 + w6 + w7+16);
+            
+            lv.Columns[2].Width = w / 5;
+            lv.Columns[3].Width = w / 5;
+            lv.Columns[4].Width = w / 5;
+            lv.Columns[5].Width = w / 5;
+            lv.Columns[6].Width = w / 5;
+        }
+
+        private void FrmMain_SizeChanged(object sender, EventArgs e)
+        {
+            SetWidth(lvNear);
+            SetWidth(lvWorking, false);
         }
     }
 }
