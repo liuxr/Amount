@@ -42,11 +42,13 @@ namespace MyPay
 
             LoadData();
             //更新用户名
-            frmBrower.onUpdateName += (name) => {
+            frmBrower.onUpdateName += (name) =>
+            {
                 lblName.Text = name;
             };
 
-            frmBrower.onGetContext += (( html, newOrders,canWatch) => {
+            frmBrower.onGetContext += ((html, newOrders, canWatch) =>
+            {
                 btnWatch.Enabled = canWatch;
                 rtbHtml.Clear();
                 rtbHtml.AppendText(html);
@@ -62,21 +64,26 @@ namespace MyPay
             {
                 btnWatch.Text = "监控已开启";
                 btnWatch.Tag = "1";
+                tabControl2.SelectedIndex = 1;
                 frmBrower.Start();
+                 
             }
-            else {
+            else
+            {
                 btnWatch.Text = "监控已关闭";
                 btnWatch.Tag = "0";
                 frmBrower.Stop();
             }
         }
 
-        private void LoadData() {
+        private void LoadData()
+        {
 
             OrderDAL orderDal = new OrderDAL();
             List<Order> list = orderDal.GetList();
 
-            foreach (Order model in list) {
+            foreach (Order model in list)
+            {
                 ListViewItem item = new ListViewItem(new string[] {
                     model.ID.ToString(),
                     model.CreateDate,
@@ -89,11 +96,12 @@ namespace MyPay
                     model.State
                 });
 
-                lvNear.Items.Insert(0,item);
+                lvNear.Items.Insert(0, item);
             }
         }
 
-        private void AppendData(List<Order> list) {
+        private void AppendData(List<Order> list)
+        {
             foreach (Order model in list)
             {
                 ListViewItem item = new ListViewItem(new string[] {
@@ -108,7 +116,7 @@ namespace MyPay
                     model.State
                 });
 
-                lvWorking.Items.Insert(0,item);
+                lvWorking.Items.Insert(0, item);
             }
         }
 
@@ -116,7 +124,8 @@ namespace MyPay
         {
             int result = 20;
             bool b = int.TryParse(txtTimeSpan.Text.Trim(), out result);
-            if (!b|| result<=0) {
+            if (!b || result <= 0)
+            {
                 MessageBox.Show("Time is Invaid");
                 return;
             }
@@ -125,14 +134,15 @@ namespace MyPay
         }
 
 
-        private void SetWidth(ListView lv,bool showId=true) {
+        private void SetWidth(ListView lv, bool showId = true)
+        {
             int width = lv.Width;
-            int w1 = lv.Columns[0].Width = showId ? 60 : 0;
-            int w2 = lv.Columns[1].Width = 120;
+            int w1 = lv.Columns[0].Width = showId ? 50 : 0;
+            int w2 = lv.Columns[1].Width = 140;
             int w6 = lv.Columns[7].Width = 80;
             int w7 = lv.Columns[8].Width = 80;
-            int w = width - (w1+ w2 + w6 + w7+16);
-            
+            int w = width - (w1 + w2 + w6 + w7 + 16);
+
             lv.Columns[2].Width = w / 5;
             lv.Columns[3].Width = w / 5;
             lv.Columns[4].Width = w / 5;

@@ -188,7 +188,9 @@ namespace MyPay
         {
             //请求的URL(全部转换为小写)
             string requestUrl = e.Url.AbsoluteUri.ToLower();
+            AutoLogin();
 
+            return;
             if (NavigatingUrl.Equals(loginIndexUrl) && !requestUrl.Equals(loginIndexUrl)) {
                 if (onUpdateName != null) {
                     onUpdateName(loginName);
@@ -229,12 +231,6 @@ namespace MyPay
             if (htmlElement == null)
                 return;
             loginName = htmlElement.GetAttribute("value");
-            //if (string.IsNullOrEmpty(loginName))
-            //    return;
-            //if (onUpdateName != null)
-            //{
-            //    onUpdateName(loginName);
-            //}
         }
 
         private void LoadInfo()
@@ -350,6 +346,39 @@ namespace MyPay
             e.Cancel = true;
         }
 
+        //自动登录
+        private void AutoLogin() {
+            //获取登录界面的名称
+            //  "J-input-user"
+            HtmlElement htmlElement = element.GetElement_Id(webBrowser1, "J-input-user");
+            if (htmlElement == null)
+                return;
+            htmlElement.SetAttribute("value","liu.xr90@163.com");
+            
+                htmlElement = element.GetElement_Id(webBrowser1, "password_rsainput");
+            if (htmlElement == null)
+                return;
+            htmlElement.SetAttribute("value", "394523078lxr");
+
+            //"J-login-btn" "login"
+            htmlElement = element.GetElement_Id(webBrowser1, "login");
+            if (htmlElement == null)
+                return;
+            element.Btn_click(htmlElement, "submit");
+
+
+            //htmlElement = element.GetElement_Id(webBrowser1, "J-checkcodeIcon");
+            //if (htmlElement == null)
+            //    return;
+            htmlElement.Click += HtmlElement_Click;
+
+            
+        }
+
+        private void HtmlElement_Click(object sender, HtmlElementEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }
