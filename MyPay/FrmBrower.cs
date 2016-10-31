@@ -188,9 +188,9 @@ namespace MyPay
         {
             //请求的URL(全部转换为小写)
             string requestUrl = e.Url.AbsoluteUri.ToLower();
-            AutoLogin();
+            //AutoLogin();
 
-            return;
+            //return;
             if (NavigatingUrl.Equals(loginIndexUrl) && !requestUrl.Equals(loginIndexUrl)) {
                 if (onUpdateName != null) {
                     onUpdateName(loginName);
@@ -358,7 +358,7 @@ namespace MyPay
                 htmlElement = element.GetElement_Id(webBrowser1, "password_rsainput");
             if (htmlElement == null)
                 return;
-            htmlElement.SetAttribute("value", "394523078lxr");
+            htmlElement.SetAttribute("value", "bbbbbb");
 
             //"J-login-btn" "login"
             htmlElement = element.GetElement_Id(webBrowser1, "login");
@@ -370,7 +370,7 @@ namespace MyPay
             //htmlElement = element.GetElement_Id(webBrowser1, "J-checkcodeIcon");
             //if (htmlElement == null)
             //    return;
-            htmlElement.Click += HtmlElement_Click;
+           // htmlElement.Click += HtmlElement_Click;
 
             
         }

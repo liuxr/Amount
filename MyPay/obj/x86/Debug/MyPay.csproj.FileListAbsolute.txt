@@ -1,6 +1,5 @@
 E:\MyPay\MyPay\bin\Debug\MyPay.exe
 E:\MyPay\MyPay\bin\Debug\MyPay.pdb
-E:\MyPay\MyPay\obj\x86\Debug\MyPay.Form1.resources
 E:\MyPay\MyPay\obj\x86\Debug\MyPay.Properties.Resources.resources
 E:\MyPay\MyPay\obj\x86\Debug\MyPay.csproj.GenerateResource.Cache
 E:\MyPay\MyPay\obj\x86\Debug\MyPay.exe
@@ -53,3 +52,10 @@ F:\MyPay\MyPay\bin\Debug\Dapper.dll
 F:\MyPay\MyPay\bin\Debug\System.Data.SQLite.dll
 F:\MyPay\MyPay\bin\Debug\Dapper.xml
 F:\MyPay\MyPay\bin\Debug\System.Data.SQLite.pdb
+E:\MyPay\MyPay\bin\Debug\Dapper.dll
+E:\MyPay\MyPay\bin\Debug\System.Data.SQLite.dll
+E:\MyPay\MyPay\bin\Debug\Dapper.xml
+E:\MyPay\MyPay\bin\Debug\System.Data.SQLite.pdb
+E:\MyPay\MyPay\obj\x86\Debug\MyPay.csprojResolveAssemblyReference.cache
+E:\MyPay\MyPay\obj\x86\Debug\MyPay.FrmBrower.resources
+E:\MyPay\MyPay\obj\x86\Debug\MyPay.FrmMain.resources
