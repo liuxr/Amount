@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Crypt3Des.cs" />
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +72,7 @@
     <Compile Include="Order.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Request.cs" />
     <EmbeddedResource Include="FrmBrower.resx">
       <DependentUpon>FrmBrower.cs</DependentUpon>
     </EmbeddedResource>
@@ -100,6 +102,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="文档\3DES.class.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="文档\WAD%28{%28S1GGM89XO65]QK1HP.png" />
+    <Content Include="文档\说明.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
