@@ -15,10 +15,15 @@ namespace MyPay
         {
             Crypt3Des c = new Crypt3Des(Request.Key);
             string input= "{\"account\":\"dejin6334@163.com\"}";
-            c.Encrypt(input);
+            c.EncryptString(input);
+           // c.Encrypt3DES(input, Request.Key);
+
+            string test=    c.Encrypt(input);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmMain());
         }
+
+       
     }
 }

@@ -103,6 +103,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="文档\3DES.class.php" />
+    <None Include="文档\test.php" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="文档\WAD%28{%28S1GGM89XO65]QK1HP.png" />
