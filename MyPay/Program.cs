@@ -13,6 +13,9 @@ namespace MyPay
         [STAThread]
         static void Main()
         {
+            Crypt3Des c = new Crypt3Des(Request.Key);
+            string input= "{\"account\":\"dejin6334@163.com\"}";
+            c.Encrypt(input);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmMain());

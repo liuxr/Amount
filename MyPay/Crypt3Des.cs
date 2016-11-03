@@ -48,8 +48,15 @@ namespace MyPay
             string k = key.PadRight(24, '0');
             mCSP.Mode = CipherMode.ECB;
             mCSP.Key = Convert.FromBase64String(key);
-            //mCSP.IV=Convert.FromBase64String()
-            return "";
+            mCSP.GenerateIV();
+            // mCSP.IV =
+            using (ICryptoTransform ct = mCSP.CreateEncryptor()) {
+                //byte[] byt = Encoding.UTF8.GetBytes(strValue);
+                //results = ct.TransformFinalBlock(byt, 0, 8);
+
+            }
+                //mCSP.IV=Convert.FromBase64String()
+                return "";
         }
 
         /// <summary>

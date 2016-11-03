@@ -25,7 +25,7 @@ namespace MyPay
 {
     public class Request
     {
-        private string Key = "keyjingcai2l.8ke520lhJin.Cai@ss283.229808e";
+        public static string Key = "keyjingcai2l.8ke520lhJin.Cai@ss283.229808e";
 
         ///<summary>
         ///采用https协议访问网络
@@ -48,6 +48,26 @@ namespace MyPay
             {
                 return reader.ReadToEnd();
             }
+        }
+
+        public void Test() {
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param["title"] = "交易名称";
+            param["orderno"] = "商户订单号";
+            param["tradeno"] = "支付宝交易单号";
+            param["serialno"] = "流水号";
+            param["money"] = "0.01";
+            param["tradetime"] = "2016-10012 11：33：22";
+            param["tradestatus"] = "交易成功";
+            param["nickname"] = "支付宝名称";
+            param["account"] = "wangjingcan@126.com";
+
+
+            //m=Api&c=Alipay&a=alipaylog&inputparam
+            string para = string.Empty;
+            para = "m=Api&c=Alipay&a=alipaylog&inputparam=";
+           
+
         }
     }
 }
