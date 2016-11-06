@@ -86,6 +86,42 @@ namespace MyPay
             }
         }
 
+        /// <summary>
+        /// Post提交数据
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static string Post(string url,string data) {
+           // string strURL = "http://localhost/WinformSubmit.php";
+            System.Net.HttpWebRequest request;
+            request = (System.Net.HttpWebRequest)WebRequest.Create(url);
+            //Post请求方式
+            request.Method = "POST";
+            // 内容类型
+            request.ContentType = "application/x-www-form-urlencoded";
+            // 参数经过URL编码
+            //string paraUrlCoded = System.Web.HttpUtility.UrlEncode("keyword");
+            //paraUrlCoded += "=" + System.Web.HttpUtility.UrlEncode("多月");
+            byte[] payload;
+            //将URL编码后的字符串转化为字节
+            payload = System.Text.Encoding.UTF8.GetBytes(data);
+            //设置请求的 ContentLength 
+            request.ContentLength = payload.Length;
+            //获得请 求流
+            System.IO.Stream writer = request.GetRequestStream();
+            //将请求参数写入流
+            writer.Write(payload, 0, payload.Length);
+            // 关闭请求流
+            writer.Close();
+            System.Net.HttpWebResponse response;
+            // 获得响应流
+            response = (System.Net.HttpWebResponse)request.GetResponse();
+            System.IO.StreamReader myreader = new System.IO.StreamReader(response.GetResponseStream(), Encoding.UTF8);
+            string responseText = myreader.ReadToEnd();
+            myreader.Close();
+            return responseText;
+        }
 
         public void Test() {
             Dictionary<string, string> param = new Dictionary<string, string>();
