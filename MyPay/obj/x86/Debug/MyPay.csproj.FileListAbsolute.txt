@@ -49,8 +49,10 @@ F:\MyPay\MyPay\bin\Debug\MyPay.exe.config
 F:\MyPay\MyPay\bin\Debug\MyPay.exe
 F:\MyPay\MyPay\bin\Debug\MyPay.pdb
 F:\MyPay\MyPay\bin\Debug\Dapper.dll
+F:\MyPay\MyPay\bin\Debug\Newtonsoft.Json.dll
 F:\MyPay\MyPay\bin\Debug\System.Data.SQLite.dll
 F:\MyPay\MyPay\bin\Debug\Dapper.xml
+F:\MyPay\MyPay\bin\Debug\Newtonsoft.Json.xml
 F:\MyPay\MyPay\bin\Debug\System.Data.SQLite.pdb
 F:\MyPay\MyPay\obj\x86\Debug\MyPay.FrmBrower.resources
 F:\MyPay\MyPay\obj\x86\Debug\MyPay.FrmMain.resources

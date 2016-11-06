@@ -20,12 +20,21 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MyPay
 {
     public class Request
     {
+        /// <summary>
+        /// 密钥
+        /// </summary>
         public static string Key = "keyjingcai2l.8ke520lhJin.Cai@ss283.229808e";
+
+        /// <summary>
+        /// 请求地址
+        /// </summary>
+        public static string Url = "http://520jingcai.com/index.php";
 
         ///<summary>
         ///采用https协议访问网络
@@ -33,7 +42,7 @@ namespace MyPay
         ///<param name="URL">url地址</param>
         ///<param name="strPostdata">发送的数据</param>
         ///<returns></returns>
-        public static string OpenReadWithHttps(string URL, string strPostdata, string strEncoding)
+        public static string OpenReadWithHttps(string URL, string strPostdata, string strEncoding="utf-8")
         {
             Encoding encoding = Encoding.Default;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
@@ -49,6 +58,34 @@ namespace MyPay
                 return reader.ReadToEnd();
             }
         }
+
+        /// <summary>
+        /// Get方式提交数据
+        /// </summary>
+        /// <param name="url">url+param</param>
+        /// <returns></returns>
+        public static string Get(string url)
+        {
+            try
+            {
+                // string strURL = "http://520jingcai.com/index.php?m=Api&c=Alipay&a=alipaylog&inputparam=IWKZZd-XuwSgXLyOweGOGtAKZqr9kwsSsdD9nHz88raSqHCYRqfnn4zVGTuv407XE7RcBwDIHAv7zJ4udOvDSC3LosQQ86yOQHQ1HTrReM-zvWYmSrWs4N6SW-ffXcODOX9lx6exLU64Me021TmmSHEj3J--UskbSaAcvJm4D9kjJxARJl0NaBCvtdyZFmsuuqK5vGaHEBFXwFH05ApGp-iCXXjh98VpBeKmAlwkgZXf27fp4_Gg5PwOvEDiwWcOH911xhPl1IiC-_e8ynO5AZ-8I--UjWeoiUbZUYooM6j6em8dlBKz1c4v-dUE0vDeB8I2aJWx0yL4GwYl6Gg-j5avabb29Kn9SG1MMsbKhVNKj9Q3cIr2Cekjdyilb4HqsdD9nHz88rZvyXRRvASgAy6oSMmv87nB_k8xSFNIDKEg6Fg07HgQfS_6OjZ-8-DA";
+                System.Net.HttpWebRequest request;
+                // 创建一个HTTP请求
+                request = (System.Net.HttpWebRequest)WebRequest.Create(url);
+                //request.Method="get";
+                System.Net.HttpWebResponse response;
+                response = (System.Net.HttpWebResponse)request.GetResponse();
+                System.IO.StreamReader myreader = new System.IO.StreamReader(response.GetResponseStream(), Encoding.UTF8);
+                string responseText = myreader.ReadToEnd();
+                myreader.Close();
+                return Unicode2String(responseText);
+            }
+            catch (Exception ex)
+            {
+                return "{\"m\":\"Api\",\"c\":\"Alipay\",\"a\":\"alipaylog\",\"status\":0,\"msg\":\"网络异常\"}";
+            }
+        }
+
 
         public void Test() {
             Dictionary<string, string> param = new Dictionary<string, string>();
@@ -68,6 +105,34 @@ namespace MyPay
             para = "m=Api&c=Alipay&a=alipaylog&inputparam=";
            
 
+        }
+
+        /// <summary>  
+        /// <summary>  
+        /// 字符串转Unicode  
+        /// </summary>  
+        /// <param name="source">源字符串</param>  
+        /// <returns>Unicode编码后的字符串</returns>  
+        public static string String2Unicode(string source)
+        {
+            byte[] bytes = Encoding.Unicode.GetBytes(source);
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i += 2)
+            {
+                stringBuilder.AppendFormat("\\u{0}{1}", bytes[i + 1].ToString("x").PadLeft(2, '0'), bytes[i].ToString("x").PadLeft(2, '0'));
+            }
+            return stringBuilder.ToString();
+        }
+
+        /// <summary>  
+        /// Unicode转字符串  
+        /// </summary>  
+        /// <param name="source">经过Unicode编码的字符串</param>  
+        /// <returns>正常字符串</returns>  
+        public static string Unicode2String(string source)
+        {
+            return new Regex(@"\\u([0-9A-F]{4})", RegexOptions.IgnoreCase | RegexOptions.Compiled).Replace(
+                         source, x => string.Empty + Convert.ToChar(Convert.ToUInt16(x.Result("$1"), 16)));
         }
     }
 }

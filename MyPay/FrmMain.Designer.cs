@@ -40,6 +40,8 @@
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.rtbHtml = new System.Windows.Forms.RichTextBox();
@@ -53,8 +55,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.txtTimeSpan = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader18 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader19 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader20 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lvWorking = new System.Windows.Forms.ListView();
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader10 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -65,6 +68,9 @@
             this.columnHeader15 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader16 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader17 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader21 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader22 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader23 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -132,12 +138,16 @@
             this.columnHeader5,
             this.columnHeader6,
             this.columnHeader7,
-            this.columnHeader8});
+            this.columnHeader8,
+            this.columnHeader18,
+            this.columnHeader19,
+            this.columnHeader20});
             this.lvNear.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvNear.FullRowSelect = true;
             this.lvNear.GridLines = true;
             this.lvNear.Location = new System.Drawing.Point(3, 3);
             this.lvNear.Name = "lvNear";
+            this.lvNear.ShowItemToolTips = true;
             this.lvNear.Size = new System.Drawing.Size(772, 542);
             this.lvNear.TabIndex = 0;
             this.lvNear.UseCompatibleStateImageBehavior = false;
@@ -145,7 +155,7 @@
             // 
             // columnHeader0
             // 
-            this.columnHeader0.Text = "ID";
+            this.columnHeader0.Text = "编号";
             this.columnHeader0.Width = 40;
             // 
             // columnHeader1
@@ -177,6 +187,14 @@
             // 
             this.columnHeader6.Text = "对方";
             this.columnHeader6.Width = 100;
+            // 
+            // columnHeader7
+            // 
+            this.columnHeader7.Text = "金额";
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "状态";
             // 
             // tabPage4
             // 
@@ -223,7 +241,8 @@
             // 
             // btnShowWebBrower
             // 
-            this.btnShowWebBrower.Location = new System.Drawing.Point(373, 16);
+            this.btnShowWebBrower.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShowWebBrower.Location = new System.Drawing.Point(693, 16);
             this.btnShowWebBrower.Name = "btnShowWebBrower";
             this.btnShowWebBrower.Size = new System.Drawing.Size(75, 23);
             this.btnShowWebBrower.TabIndex = 2;
@@ -233,14 +252,16 @@
             // 
             // btnWatch
             // 
+            this.btnWatch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnWatch.Enabled = false;
-            this.btnWatch.Location = new System.Drawing.Point(280, 16);
+            this.btnWatch.Location = new System.Drawing.Point(600, 16);
             this.btnWatch.Name = "btnWatch";
             this.btnWatch.Size = new System.Drawing.Size(75, 23);
             this.btnWatch.TabIndex = 2;
             this.btnWatch.Tag = "0";
             this.btnWatch.Text = "监控已关闭";
             this.btnWatch.UseVisualStyleBackColor = true;
+            this.btnWatch.Visible = false;
             this.btnWatch.Click += new System.EventHandler(this.btnWatch_Click);
             // 
             // lblName
@@ -310,13 +331,17 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "时间";
             // 
-            // columnHeader7
+            // columnHeader18
             // 
-            this.columnHeader7.Text = "金额";
+            this.columnHeader18.Text = "上传状态";
             // 
-            // columnHeader8
+            // columnHeader19
             // 
-            this.columnHeader8.Text = "状态";
+            this.columnHeader19.Text = "上传次数";
+            // 
+            // columnHeader20
+            // 
+            this.columnHeader20.Text = "上传时间";
             // 
             // lvWorking
             // 
@@ -329,12 +354,16 @@
             this.columnHeader14,
             this.columnHeader15,
             this.columnHeader16,
-            this.columnHeader17});
+            this.columnHeader17,
+            this.columnHeader21,
+            this.columnHeader22,
+            this.columnHeader23});
             this.lvWorking.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lvWorking.FullRowSelect = true;
             this.lvWorking.GridLines = true;
             this.lvWorking.Location = new System.Drawing.Point(3, 3);
             this.lvWorking.Name = "lvWorking";
+            this.lvWorking.ShowItemToolTips = true;
             this.lvWorking.Size = new System.Drawing.Size(772, 542);
             this.lvWorking.TabIndex = 1;
             this.lvWorking.UseCompatibleStateImageBehavior = false;
@@ -342,7 +371,7 @@
             // 
             // columnHeader9
             // 
-            this.columnHeader9.Text = "ID";
+            this.columnHeader9.Text = "编号";
             this.columnHeader9.Width = 40;
             // 
             // columnHeader10
@@ -383,6 +412,18 @@
             // 
             this.columnHeader17.Text = "状态";
             // 
+            // columnHeader21
+            // 
+            this.columnHeader21.Text = "上传状态";
+            // 
+            // columnHeader22
+            // 
+            this.columnHeader22.Text = "上传次数";
+            // 
+            // columnHeader23
+            // 
+            this.columnHeader23.Text = "上传时间";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -391,6 +432,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "FrmMain";
             this.Text = "阿灿专用";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMain_FormClosing);
             this.Load += new System.EventHandler(this.FrmMain_Load);
             this.SizeChanged += new System.EventHandler(this.FrmMain_SizeChanged);
             this.tabControl1.ResumeLayout(false);
@@ -436,6 +478,9 @@
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.ColumnHeader columnHeader8;
+        private System.Windows.Forms.ColumnHeader columnHeader18;
+        private System.Windows.Forms.ColumnHeader columnHeader19;
+        private System.Windows.Forms.ColumnHeader columnHeader20;
         private System.Windows.Forms.ListView lvWorking;
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.ColumnHeader columnHeader10;
@@ -446,5 +491,8 @@
         private System.Windows.Forms.ColumnHeader columnHeader15;
         private System.Windows.Forms.ColumnHeader columnHeader16;
         private System.Windows.Forms.ColumnHeader columnHeader17;
+        private System.Windows.Forms.ColumnHeader columnHeader21;
+        private System.Windows.Forms.ColumnHeader columnHeader22;
+        private System.Windows.Forms.ColumnHeader columnHeader23;
     }
 }

@@ -147,5 +147,33 @@ namespace MyPay
         /// 最后上传时间
         /// </summary>
         public string UpLoadDate { get; set; }
+
+        public string Account
+        {
+            get
+            {
+                return account;
+            }
+
+            set
+            {
+                account = value;
+            }
+        }
+
+        private string account;
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null) throw new ArgumentNullException { };
+            Order o = (Order)obj;
+            if (o == null) throw new NotSupportedException { };
+            return this.OrderNo == o.OrderNo && this.BatchNo == o.BatchNo && this.TradeNo == o.TradeNo;
+        }
+
+        public override int GetHashCode()
+        {
+            return (this.OrderNo + this.TradeNo + this.BatchNo).GetHashCode();
+        }
     }
 }

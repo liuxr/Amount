@@ -41,54 +41,61 @@ namespace MyPay
         public Crypt3Des(string key) {
             this.key = key;
         }
-        private SymmetricAlgorithm mCSP = new DESCryptoServiceProvider();
-        public string Encrypt(string input) {
-            mCSP.Padding = PaddingMode.None;
-            mCSP.Mode = CipherMode.ECB;
-            int size = mCSP.FeedbackSize;
-            string input1 = Pkcs5_pad(input, size);
-            string k = key.PadRight(24, '0');
-            //mCSP.KeySize = 24;
-            //mCSP.Key = Convert.FromBase64String(k);
-            mCSP.Key =  System.Text.Encoding.Default.GetBytes(k.Substring(0,8));
-            mCSP.GenerateIV();
-            using (ICryptoTransform ct = mCSP.CreateEncryptor())
-            {
-               // byte[] byt = Convert.FromBase64String(input1);
-                byte[] byt =  Encoding.UTF8.GetBytes(input1);
-                byte[] results = ct.TransformFinalBlock(byt, 0, 8);
-                string a = Convert.ToBase64String(results);
-            }
-            //mCSP.IV=Convert.FromBase64String()
-            return "";
-        }
-
-
-
-
-        //// <SUMMARY>
-            /// 加密
-            /// </SUMMARY>
-            /// <PARAM name="strString"></PARAM>
-            /// <PARAM name="strKey"></PARAM>
-            /// <PARAM name="encoding"></PARAM>
-            /// <RETURNS></RETURNS>
-        public string Encrypt3DES(string strString)
+        public string Encrypt(string input)
         {
-            DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
+            try
+            {
+                byte[] iv = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };      //当模式为ECB时，IV无用
+                byte[] data = Encoding.UTF8.GetBytes(input);
 
-            DES.Key = System.Text.Encoding.Default.GetBytes(this.Key);
-            DES.Mode = CipherMode.ECB;
-            DES.Padding = PaddingMode.Zeros;
+                string k = key.PadRight(24, '0');
 
-            ICryptoTransform DESEncrypt = DES.CreateEncryptor();
+                string encode = Convert.ToBase64String(Encoding.UTF8.GetBytes(k));
+                byte[] keytemp = Convert.FromBase64String(encode);
+                byte[] key1 = new byte[24];
+                for (int i = 0; i < 24; i++)
+                {
+                    key1[i] = keytemp[i];
+                }
+                // Create a MemoryStream.
+                MemoryStream mStream = new MemoryStream();
 
-            byte[] Buffer = System.Text.Encoding.Default.GetBytes(strString);
+                TripleDESCryptoServiceProvider tdsp = new TripleDESCryptoServiceProvider();
+                tdsp.Mode = CipherMode.ECB;
+                tdsp.Padding = PaddingMode.PKCS7;
+                // Create a CryptoStream using the MemoryStream 
+                // and the passed key and initialization vector (IV).
+                CryptoStream cStream = new CryptoStream(mStream,
+                    tdsp.CreateEncryptor(key1, iv),
+                    CryptoStreamMode.Write);
 
-            string a= Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
-            return a;
+                // Write the byte array to the crypto stream and flush it.
+                cStream.Write(data, 0, data.Length);
+                cStream.FlushFinalBlock();
+
+                // Get an array of bytes from the 
+                // MemoryStream that holds the 
+                // encrypted data.
+                byte[] ret = mStream.ToArray();
+
+                // Close the streams.
+                cStream.Close();
+                mStream.Close();
+
+                // Return the encrypted buffer.
+                return UrlSafe(Convert.ToBase64String(ret));
+            }
+            catch (CryptographicException e)
+            {
+                Console.WriteLine("A Cryptographic error occurred: {0}", e.Message);
+                return "";
+            }
         }
 
+        private string UrlSafe(string data)
+        {
+            return data.Replace('+', '-').Replace('/', '_').Replace('=', char.MinValue);
+        }
 
 
         /// <summary>
@@ -102,8 +109,8 @@ namespace MyPay
             byte[] array = new byte[1];
             array[0] = (byte)(pad);
             string ch = Convert.ToString(System.Text.Encoding.ASCII.GetString(array));
-            return text;
-            // return text + Repeat(ch, pad);
+          
+             return text + Repeat(ch, pad);
         }
 
         /// <summary>
@@ -119,75 +126,54 @@ namespace MyPay
             }
             return result;
         }
-
-
-        private void Test() {
-            TripleDESCryptoServiceProvider des = new TripleDESCryptoServiceProvider();
-            des.Mode = CipherMode.ECB;
-            des.Padding = PaddingMode.PKCS7;
-            byte[] buffer = Encoding.Default.GetBytes("明文");
-            MemoryStream stream = new MemoryStream();
-            byte[] key = Convert.FromBase64String("AQjP4U1aCnnybWsmHUQ7BVIxHyrnQ2AP");
-            CryptoStream encStream = new CryptoStream(stream, des.CreateEncryptor(key, null), CryptoStreamMode.Write);
-            encStream.Write(buffer, 0, buffer.Length);
-            encStream.FlushFinalBlock();
-            byte[] res = stream.ToArray();
-            Console.WriteLine("result:" + Convert.ToBase64String(res));
-        }
-
-
-        public  string Encrypt3DES(string a_strString, string a_strKey)
-        {
-            TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
-
-            DES.Key = ASCIIEncoding.ASCII.GetBytes(a_strKey);
-            DES.Mode = CipherMode.ECB;
-
-            ICryptoTransform DESEncrypt = DES.CreateEncryptor();
-
-            byte[] Buffer = ASCIIEncoding.ASCII.GetBytes(a_strString);
-            return Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
-        }
-
-
         /// <summary>
-        /// 加密
+        /// DES3 ECB模式加密
         /// </summary>
-        /// <param name="Value">明文</param>
-        /// <returns>密文 base64转码</returns>
-        public string EncryptString(string Value)
+        /// <param name="key">密钥</param>
+        /// <param name="iv">IV(当模式为ECB时，IV无用)</param>
+        /// <param name="str">明文的byte数组</param>
+        /// <returns>密文的byte数组</returns>
+        public static byte[] Des3EncodeECB(byte[] key, byte[] iv, byte[] data)
         {
-            SymmetricAlgorithm mCSP = new TripleDESCryptoServiceProvider();
-            ICryptoTransform ct;
-            MemoryStream ms;
-            CryptoStream cs;
-            byte[] byt;
-            mCSP.Key = Convert.FromBase64String(GetString(this.Key));
-            // mCSP.IV = Convert.FromBase64String(sIV);
-            mCSP.GenerateIV();
-            Console.WriteLine("Key:" + mCSP.Key.ToString() + ",IV:" + mCSP.IV.ToString());
-            //指定加密的运算模式
-            mCSP.Mode = System.Security.Cryptography.CipherMode.ECB;
-            //获取或设置加密算法的填充模式
-            mCSP.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
-            ct = mCSP.CreateEncryptor(mCSP.Key, mCSP.IV);
-            byt = Encoding.UTF8.GetBytes(Value);
-            ms = new MemoryStream();
-            cs = new CryptoStream(ms, ct, CryptoStreamMode.Write);
-            cs.Write(byt, 0, byt.Length);
-            cs.FlushFinalBlock();
-            cs.Close();
-            return Convert.ToBase64String(ms.ToArray());
-        }
-
-        private string GetString(string imgData) {
-            string dummyData = imgData.Trim().Replace("%", "").Replace(",", "").Replace(" ", "+").Replace(".", "").Replace("@", "+");
-            if (dummyData.Length % 4 > 0)
+            try
             {
-                dummyData = dummyData.PadRight(dummyData.Length + 4 - dummyData.Length % 4, '=');
+                // Create a MemoryStream.
+                MemoryStream mStream = new MemoryStream();
+
+                TripleDESCryptoServiceProvider tdsp = new TripleDESCryptoServiceProvider();
+                tdsp.Mode = CipherMode.ECB;
+                tdsp.Padding = PaddingMode.PKCS7;
+                // Create a CryptoStream using the MemoryStream 
+                // and the passed key and initialization vector (IV).
+                CryptoStream cStream = new CryptoStream(mStream,
+                    tdsp.CreateEncryptor(key, iv),
+                    CryptoStreamMode.Write);
+
+                // Write the byte array to the crypto stream and flush it.
+                cStream.Write(data, 0, data.Length);
+                cStream.FlushFinalBlock();
+
+                // Get an array of bytes from the 
+                // MemoryStream that holds the 
+                // encrypted data.
+                byte[] ret = mStream.ToArray();
+
+                // Close the streams.
+                cStream.Close();
+                mStream.Close();
+
+                // Return the encrypted buffer.
+                return ret;
+            }
+            catch (CryptographicException e)
+            {
+                Console.WriteLine("A Cryptographic error occurred: {0}", e.Message);
+                return null;
             }
 
-            return dummyData;
         }
+
+
+      
     }
 }
