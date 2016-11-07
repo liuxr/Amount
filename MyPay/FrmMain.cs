@@ -263,7 +263,8 @@ namespace MyPay
         private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult result = MessageBox.Show("确定要关闭程序吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.Cancel) {
+            if (result == DialogResult.Cancel)
+            {
                 e.Cancel = true;
             }
         }

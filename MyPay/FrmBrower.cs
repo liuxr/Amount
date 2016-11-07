@@ -142,6 +142,9 @@ namespace MyPay
             timer.Tick += Timer_Tick;
         }
 
+
+        int i = 0;
+
         /// <summary>
         /// 定时访问地址
         /// </summary>
@@ -150,12 +153,12 @@ namespace MyPay
         private void Timer_Tick(object sender, EventArgs e)
         {
             //正在监视，但是Url不是采集页面
-            //if (isWatch && webBrowser1.Url.AbsoluteUri.ToLower().Equals(url))
-            //{
-            //    ReInitData();
-            //    MessageBox.Show("登录页已经失效，请重新登录");
-            //    return;
-            //}
+            if (isWatch && !webBrowser1.Url.AbsoluteUri.ToLower().Equals(url))
+            {
+                ReInitData();
+                MessageBox.Show("登录页已经失效，请重新登录");
+                return;
+            }
             webBrowser1.Navigate(url);
         }
 
@@ -164,9 +167,10 @@ namespace MyPay
         /// </summary>
         private void ReInitData()
         {
-            Stop();
+           // Stop();
             OldList.Clear();
             NewList.Clear();
+            isWatch = false;
         }
 
         /// <summary>
@@ -241,7 +245,7 @@ namespace MyPay
 
         private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
-            string requestUrl = e.Url.AbsoluteUri.ToLower();
+           // string requestUrl = e.Url.AbsoluteUri.ToLower();
         }
 
         private void UpdateName(string requestUrl)
@@ -332,31 +336,31 @@ namespace MyPay
                 order.Account = loginName;
                 HtmlElementCollection tds = tr.Children;
                 //创建时间
-                order.CreateDate = Convert.ToDateTime(tds[0].InnerText.Replace("\r\n", "")).ToString("yyyy-MM-dd hh:mm");
+                order.CreateDate = Convert.ToDateTime(Replace(tds[0].InnerText)).ToString("yyyy-MM-dd hh:mm");
                 //名称
-                order.Name = tds[2].InnerText;
+                order.Name = Replace(tds[2].InnerText);
                 //分割获取商户订单号和交易号
                 string no = tds[3].InnerText;
                 string[] strs = no.Split(new char[] { '|', ':' });
                 if (strs.Length == 2)
                 {
                     //流水号
-                    order.BatchNo = strs[1];
+                    order.BatchNo = Replace( strs[1]);
                 }
                 else if (strs.Length == 4)
                 {
                     //商户订单号
-                    order.OrderNo = strs[1];
+                    order.OrderNo = Replace( strs[1]);
                     //交易号
-                    order.TradeNo = strs[3];
+                    order.TradeNo = Replace( strs[3]);
                 }
 
                 //对方
-                order.Payee = tds[4].InnerText;
+                order.Payee = Replace(tds[4].InnerText);
                 //金额
-                order.Amount = tds[5].InnerText;
+                order.Amount = Replace(tds[5].InnerText);
                 //状态
-                order.State = tds[7].InnerText;
+                order.State = Replace(tds[7].InnerText);
                 list.Add(order);
             }
             return list;
@@ -368,7 +372,14 @@ namespace MyPay
             e.Cancel = true;
         }
 
-
+        /// <summary>
+        /// 特殊字符串替换
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        private string Replace(string input) {
+            return input.Replace("\r\n", "").Replace("\r", "").Replace("\n", "").Trim();
+        }
 
         /// <summary>
         /// 获取需要操作的List
@@ -410,6 +421,7 @@ namespace MyPay
         {
             list.ForEach(model =>
             {
+                orderDal.Insert(model);
                 RequestResult result = orderServer.Submit(model);
                 if (result != null)
                 {

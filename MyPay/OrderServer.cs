@@ -53,16 +53,6 @@ namespace MyPay
             json.Append(string.Format(",\"tradestatus\":\"{0}\"", model.State));
             json.Append(string.Format(",\"nickname\":\"{0}\"", model.Payee));
             json.Append(string.Format(",\"account\":\"{0}\"", model.Account));
-
-            //json.Append("\"title\":" + model.Name);
-            //json.Append(",'orderno':" + model.OrderNo);
-            //json.Append(",'tradeno':" + model.TradeNo);
-            //json.Append(",'serialno':" + model.BatchNo);
-            //json.Append(",'money':" + model.Amount);
-            //json.Append(",'tradetime':" + model.CreateDate);
-            //json.Append(",'tradestatus':" + model.State);
-            //json.Append(",'nickname':" + model.Payee);
-            //json.Append(",'account':" + model.Account);
             json.Append("}");
             return json.ToString();
         }
